@@ -3,7 +3,7 @@
 set -ouex pipefail
 
 # CLI tools
-dnf5 install -y hourglass fastfetch tmate htop btop aria2 eza bat zoxide starship kf6-servicemenus-imagetools fd-find
+dnf5 install -y hourglass fastfetch nushell tmate htop btop aria2 eza bat zoxide starship kf6-servicemenus-imagetools fd-find wezterm-git
 
 # echo "Installing Nushell.."
 # wget https://github.com/nushell/nushell/releases/download/0.108.0/nu-0.108.0-x86_64-unknown-linux-gnu.tar.gz -P /tmp

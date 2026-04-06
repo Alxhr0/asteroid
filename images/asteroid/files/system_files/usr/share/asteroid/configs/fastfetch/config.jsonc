@@ -8,7 +8,7 @@
     },
     "logo": {
         "type": "file",
-        "source": "/usr/share/horizon/asteroid/ascii/asteroid_ascii_fastfetch",
+        "source": "/usr/share/asteroid/ascii/asteroid_ascii_fastfetch",
         "color": {
             "1": "white",
             "2": "blue"
