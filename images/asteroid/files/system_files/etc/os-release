@@ -1,0 +1,15 @@
+NAME="Asteroid"
+VERSION="43 (Powered by Bazzite)"
+RELEASE_TYPE=stable
+ID=asteroid
+ID_LIKE="fedora"
+VERSION_ID=43
+VERSION_CODENAME="Kinoite"
+PLATFORM_ID="platform:f43"
+PRETTY_NAME="Asteroid"
+ANSI_COLOR="0;38;2;138;43;226"
+LOGO=asteroid-logo
+DEFAULT_HOSTNAME="asteroid"
+VARIANT="Kinoite"
+VARIANT_ID=asteroid
+BOOTLOADER_NAME="Asteroid Stable"
