@@ -3,6 +3,7 @@
 set -ouex pipefail
 
 # CLI tools
+rm -r /root # for Nushell
 dnf5 install -y hourglass fastfetch nushell tmate htop btop aria2 eza bat zoxide starship kf6-servicemenus-imagetools fd-find wezterm-git
 
 # echo "Installing Nushell.."
