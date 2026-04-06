@@ -17,7 +17,7 @@ dnf copr -y enable atim/starship
 # Enable home_Alxhr0
 dnf config-manager addrepo --from-repofile=https://download.opensuse.org/repositories/home:Alxhr0/Fedora_$(rpm -E %fedora)/home:Alxhr0.repo
 
-#dnf config-manager addrepo --from-repofile=https://download.opensuse.org/repositories/home:paul4us/Fedora_Rawhide/home:paul4us.repo
+dnf config-manager addrepo --from-repofile=https://download.opensuse.org/repositories/home:paul4us/Fedora_$(rpm -E %fedora)/home:paul4us.repo
 
 # Eza
 dnf copr -y enable alternateved/eza 
