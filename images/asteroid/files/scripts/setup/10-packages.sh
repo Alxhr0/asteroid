@@ -9,7 +9,18 @@ rm -r /root
 
 dnf5 install -y hourglass fastfetch nushell tmate htop btop aria2 eza bat zoxide kf6-servicemenus-imagetools fd-find
 
+
 # Apps
+
+# Megasync
+wget https://mega.nz/linux/repo/Fedora_44/x86_64/megasync-Fedora_44.x86_64.rpm && dnf5 install -y "$PWD/megasync-Fedora_44.x86_64.rpm"
+rm "$PWD/megasync-Fedora_44.x86_64.rpm"
+
+# Dolphin support
+wget https://mega.nz/linux/repo/Fedora_44/x86_64/dolphin-megasync-Fedora_44.x86_64.rpm
+dnf install ./dolphin-megasync-Fedora_44.x86_64.rpm
+rm ./dolphin-megasync-Fedora_44.x86_64.rpm
+
 dnf5 install -y virt-install libvirt-daemon-config-network libvirt-daemon-kvm qemu-kvm virt-manager virt-viewer libguestfs-tools python3-libguestfs virt-top edk2-ovmf swtpm partitionmanager code merkuro deepinv20-white-cursors
 
 # Gaming!
