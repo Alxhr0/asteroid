@@ -3,6 +3,10 @@
 set -ouex pipefail
 
 # CLI tools
+
+# Fix for Nushell's broken post-inst script
+rm -r /root
+
 dnf5 install -y hourglass fastfetch nushell tmate htop btop aria2 eza bat zoxide starship kf6-servicemenus-imagetools fd-find
 
 # Apps
