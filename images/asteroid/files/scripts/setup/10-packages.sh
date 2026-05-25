@@ -13,6 +13,9 @@ dnf5 install -y hourglass fastfetch nushell tmate htop btop aria2 eza bat zoxide
 # Apps
 
 # Megasync
+rm /opt
+mkdir /opt
+
 wget https://mega.nz/linux/repo/Fedora_44/x86_64/megasync-Fedora_44.x86_64.rpm && dnf5 install -y "$PWD/megasync-Fedora_44.x86_64.rpm"
 rm "$PWD/megasync-Fedora_44.x86_64.rpm"
 
