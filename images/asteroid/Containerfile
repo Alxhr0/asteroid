@@ -7,7 +7,7 @@ FROM ghcr.io/ublue-os/bazzite-nvidia-open:stable
 
 # Copy asteroid_core
 COPY images/asteroid/files/system_files /
-COPY images/asteroid/files/system_files/etc/os-release /etc
+#COPY images/asteroid/files/system_files/etc/os-release /etc
 
 RUN --mount=type=bind,from=asteroid_core,source=/,target=/asteroid_core \
     --mount=type=cache,dst=/var/cache \
