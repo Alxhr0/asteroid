@@ -7,7 +7,7 @@ set -ouex pipefail
 # Fix for Nushell's broken post-inst script
 rm -r /root
 
-dnf5 install -y hourglass fastfetch nushell tmate htop btop aria2 eza bat zoxide starship kf6-servicemenus-imagetools fd-find
+dnf5 install -y hourglass fastfetch nushell tmate htop btop aria2 eza bat zoxide kf6-servicemenus-imagetools fd-find
 
 # Apps
 dnf5 install -y virt-install libvirt-daemon-config-network libvirt-daemon-kvm qemu-kvm virt-manager virt-viewer libguestfs-tools python3-libguestfs virt-top edk2-ovmf swtpm partitionmanager code merkuro deepinv20-white-cursors
