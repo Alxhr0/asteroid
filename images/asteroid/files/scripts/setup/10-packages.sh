@@ -13,16 +13,16 @@ dnf5 install -y hourglass fastfetch nushell tmate htop btop aria2 eza bat zoxide
 # Apps
 
 # Megasync FIXME
-# rm /opt
-# mkdir /opt
-#
-# wget https://mega.nz/linux/repo/Fedora_44/x86_64/megasync-Fedora_44.x86_64.rpm && dnf5 install -y "$PWD/megasync-Fedora_44.x86_64.rpm"
-# rm "$PWD/megasync-Fedora_44.x86_64.rpm"
-#
-# # Dolphin support
-# wget https://mega.nz/linux/repo/Fedora_44/x86_64/dolphin-megasync-Fedora_44.x86_64.rpm
-# dnf install ./dolphin-megasync-Fedora_44.x86_64.rpm
-# rm ./dolphin-megasync-Fedora_44.x86_64.rpm
+rm /opt
+mkdir /opt
+
+wget https://mega.nz/linux/repo/Fedora_44/x86_64/megasync-Fedora_44.x86_64.rpm && dnf5 install --setopt=tsflags=noscripts -y "$PWD/megasync-Fedora_44.x86_64.rpm"
+rm "$PWD/megasync-Fedora_44.x86_64.rpm"
+
+# Dolphin support
+wget https://mega.nz/linux/repo/Fedora_44/x86_64/dolphin-megasync-Fedora_44.x86_64.rpm
+dnf install --setopt=tsflags=noscripts ./dolphin-megasync-Fedora_44.x86_64.rpm
+rm ./dolphin-megasync-Fedora_44.x86_64.rpm
 
 dnf5 install -y virt-install libvirt-daemon-config-network libvirt-daemon-kvm qemu-kvm virt-manager virt-viewer libguestfs-tools python3-libguestfs virt-top edk2-ovmf swtpm partitionmanager code merkuro deepinv20-white-cursors
 
