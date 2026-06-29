@@ -12,12 +12,15 @@ dnf5 install -y hourglass fastfetch nushell tmate htop btop aria2 eza bat zoxide
 
 # Apps
 
-# Megasync FIXME
+# Megasync
 rm /opt
 mkdir /opt
 
 wget https://mega.nz/linux/repo/Fedora_44/x86_64/megasync-Fedora_44.x86_64.rpm && dnf5 install --setopt=tsflags=noscripts -y "$PWD/megasync-Fedora_44.x86_64.rpm"
 rm "$PWD/megasync-Fedora_44.x86_64.rpm"
+
+# Replace the binary with a script that set LD_LIBRARY_PATH to make it run. 
+mv /usr/bin/megasync /opt/megasync/megasync
 
 # Dolphin support
 wget https://mega.nz/linux/repo/Fedora_44/x86_64/dolphin-megasync-Fedora_44.x86_64.rpm
@@ -37,4 +40,4 @@ dnf5 install -y klassy
 dnf5 in -y papirus-icon-theme
 
 # Remove unused packages
-dnf5 rm -y krfb krfb-libs kfind filelight sunshine
+dnf5 rm -y krfb krfb-libs kfind filelight sunshine krdc
