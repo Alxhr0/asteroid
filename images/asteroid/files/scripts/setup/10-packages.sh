@@ -24,7 +24,7 @@ wget https://mega.nz/linux/repo/Fedora_44/x86_64/megasync-Fedora_44.x86_64.rpm &
 rm "$PWD/megasync-Fedora_44.x86_64.rpm"
 
 # Replace the binary with a script that set LD_LIBRARY_PATH to make it run. 
-mv /usr/bin/megasync /opt/megasync/megasyn
+mv /usr/bin/megasync /opt/megasync/megasync
 mv /usr/bin/megasync-bak /usr/bin/megasync
 
 # Dolphin support
