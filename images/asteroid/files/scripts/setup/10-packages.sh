@@ -2,47 +2,38 @@
 
 set -ouex pipefail
 
+# Bootstrap paru
+pacman --noconfirm -S git base-devel
+cd /tmp
+git clone https://aur.archlinux.org/paru.git
+cd paru
+makepkg --noconfirm -si
+rm -rf /tmp/paru
+
+# Kernel and NVIDIA
+pacman --noconfirm -R linux
+
+pacman --noconfirm -S linux-cachyos linux-cachyos-headers
+pacman --noconfim -S nvidia-open-dkms lib32-nvidia-utils
+
 # CLI tools
-
-# Fix for Nushell's broken post-inst script
-rm -r /root
-
-dnf5 install -y hourglass fastfetch nushell tmate htop btop aria2 eza bat zoxide kf6-servicemenus-imagetools fd-find
-
-
-# Apps
-
-# Megasync
-rm /opt
-mkdir /opt
-
-
-# Move the script so that it doesn't get overwritten
-mv /usr/bin/megasync /usr/bin/megasync-bak
-
-wget https://mega.nz/linux/repo/Fedora_44/x86_64/megasync-Fedora_44.x86_64.rpm && dnf5 install --setopt=tsflags=noscripts -y "$PWD/megasync-Fedora_44.x86_64.rpm"
-rm "$PWD/megasync-Fedora_44.x86_64.rpm"
-
-# Replace the binary with a script that set LD_LIBRARY_PATH to make it run. 
-mv /usr/bin/megasync /opt/megasync/megasync
-mv /usr/bin/megasync-bak /usr/bin/megasync
-
-# Dolphin support
-wget https://mega.nz/linux/repo/Fedora_44/x86_64/dolphin-megasync-Fedora_44.x86_64.rpm
-dnf install --setopt=tsflags=noscripts -y ./dolphin-megasync-Fedora_44.x86_64.rpm
-rm ./dolphin-megasync-Fedora_44.x86_64.rpm
-
-dnf5 install -y virt-install libvirt-daemon libvirt-daemon-config-network libvirt-daemon-kvm qemu-kvm virt-manager virt-viewer libguestfs-tools python3-libguestfs virt-top edk2-ovmf swtpm partitionmanager code merkuro deepinv20-white-cursors
-
-# Gaming!
-dnf5 in -y --setopt=install_weak_deps=False gamemode
+pacman --noconfirm -S nushell eza bat zoxide btop htop uutils-coreutils distrobox podman
 
 # Fonts
-dnf5 install -y google-noto-fonts-all jetbrains-mono-fonts-all default-fonts-cjk
+pacman --noconfirm -S noto-fonts noto-fonts-cjk noto-fonts-emoji
 
-dnf5 install -y klassy
+# Apps
+pacman --noconfirm -S merkuro virt-manager qemu-desktop flatpak steam partitionmanager
 
-dnf5 in -y papirus-icon-theme
+## Megasync
+pacman --noconfirm -S wget
 
-# Remove unused packages
-dnf5 rm -y krfb krfb-libs kfind filelight sunshine krdc
+cd /tmp
+wget https://mega.nz/linux/repo/Arch_Extra/x86_64/megasync-x86_64.pkg.tar.zst && pacman -U "$PWD/megasync-x86_64.pkg.tar.zst"
+wget https://mega.nz/linux/repo/Arch_Extra/x86_64/dolphin-megasync-x86_64.pkg.tar.zst && pacman -U "$PWD/dolphin-megasync-x86_64.pkg.tar.zst"
+
+# Misc
+pacman --noconfirm -S deepinv20-white-cursors papirus-icon-theme man-pages networkmanager btrfs-progs
+
+
+systemctl enable NetworkManager libvirtd

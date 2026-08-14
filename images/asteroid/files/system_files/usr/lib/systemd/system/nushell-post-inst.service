@@ -1,9 +1,0 @@
-[Unit]
-Description="Run Nushell's oost-install script"
-
-[Service]
-Type=oneshot
-ExecStart=/usr/libexec/nushell/post-install.nu
-
-[Install]
-WantedBy=multi-user.target

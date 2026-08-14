@@ -2,31 +2,45 @@
 
 set -ouex pipefail
 
-dnf5 install -y wget dnf5-plugins
+pacman --noconfirm -S curl
 
-# Enable RPMFusion
-#dnf install -y https://mirrors.rpmfusion.org/free/fedora/rpmfusion-free-release-$(rpm -E %fedora).noarch.rpm https://mirrors.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-$(rpm -E %fedora).noarch.rpm
+# CachyOS repos
 
-# VSCode
-rpm --import https://packages.microsoft.com/keys/microsoft.asc
-echo -e "[code]\nname=Visual Studio Code\nbaseurl=https://packages.microsoft.com/yumrepos/vscode\nenabled=1\nautorefresh=1\ntype=rpm-md\ngpgcheck=1\ngpgkey=https://packages.microsoft.com/keys/microsoft.asc" | tee /etc/yum.repos.d/vscode.repo
+CACHYOS_KEY="F3B607488DB35A47"
 
-# Enable home_Alxhr0
-dnf config-manager addrepo --from-repofile=https://download.opensuse.org/repositories/home:Alxhr0/Fedora_$(rpm -E %fedora)/home:Alxhr0.repo
+if ! pacman-key -l | grep -q "${CACHYOS_KEY}"; then
+    pacman-key --init
+    pacman-key --recv-key "${CACHYOS_KEY}" --keyserver keyserver.ubuntu.com
+    pacman-key --lsign-key "${CACHYOS_KEY}"
+fi
 
-# Klassy
-dnf config-manager addrepo --from-repofile=https://download.opensuse.org/repositories/home:paul4us/Fedora_43/home:paul4us.repo
+if ! grep -q '^\[cachyos\]' /etc/pacman.conf; then
+    pacman -U --noconfirm \
+        'https://mirror.cachyos.org/repo/x86_64/cachyos/cachyos-keyring-20240331-1-any.pkg.tar.zst' \
+        'https://mirror.cachyos.org/repo/x86_64/cachyos/cachyos-mirrorlist-27-1-any.pkg.tar.zst' \
+        'https://mirror.cachyos.org/repo/x86_64/cachyos/cachyos-v3-mirrorlist-27-1-any.pkg.tar.zst' \
+        'https://mirror.cachyos.org/repo/x86_64/cachyos/cachyos-v4-mirrorlist-27-1-any.pkg.tar.zst'
 
-# Nushell
-echo "[gemfury-nushell]
-name=Gemfury Nushell Repo
-baseurl=https://yum.fury.io/nushell/
-enabled=1
-gpgcheck=0
-gpgkey=https://yum.fury.io/nushell/gpg.key" | tee /etc/yum.repos.d/fury-nushell.repo
+    sed -i '/^\[core\]/i \
+[cachyos]\nInclude = /etc/pacman.d/cachyos-mirrorlist\n' /etc/pacman.conf
+fi
 
-# Enable the BLU kernel
-#dnf5 -y copr enable sentry/kernel-blu
+if ! grep -q '^DisableSandboxNetwork' /etc/pacman.conf; then
+    sed -i '/^\[options\]/a DisableSandboxNetwork' /etc/pacman.conf
+fi
 
-# Enable Steam repo
-#dnf5 -y config-manager addrepo --from-repofile=https://negativo17.org/repos/fedora-steam.repo
+pacman -Syu --noconfirm
+
+# Enable multilib
+sed -i '/^#\[multilib\]/,/Include/ s/^#//' /etc/pacman.conf
+
+# home_Alxhr0 (my own repo)
+
+echo -e "[home_Alxhr0_Arch]\nServer = https://download.opensuse.org/repositories/home:/Alxhr0/Arch/x86_64" >> /etc/pacman.conf
+
+key=$(curl -fsSL https://download.opensuse.org/repositories/home:Alxhr0/Arch/$(uname -m)/home_Alxhr0_Arch.key)
+fingerprint=$(gpg --quiet --with-colons --import-options show-only --import --fingerprint <<< "${key}" | awk -F: '$1 == "fpr" { print $10 }')
+
+pacman-key --init
+pacman-key --add - <<< "${key}"
+pacman-key --lsign-key "${fingerprint}"

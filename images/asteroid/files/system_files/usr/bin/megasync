@@ -1,7 +1,0 @@
-#!/usr/bin/env bash
-
-# NOTE: This is needed to make Megasync run at all
-
-export LD_LIBRARY_PATH="/usr/share/factory/opt/megasync/lib"
-
-exec /usr/share/factory/opt/megasync/megasync $@

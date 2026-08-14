@@ -4,9 +4,6 @@ echo "::group:: ===$(basename "$0")==="
 
 set -eoux pipefail
 
-mv /opt /usr/share/factory
-ln -s /var/opt /opt
-
 gtk-update-icon-cache
 
 rm -rf /tmp/* || true

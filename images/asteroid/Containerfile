@@ -3,17 +3,17 @@ FROM scratch AS asteroid_core
 COPY images/asteroid/files /
 
 # Base Image
-FROM ghcr.io/ublue-os/bazzite-nvidia-open:stable
+FROM  ghcr.io/huntedraven7/blueprint:arch
 
 # Copy asteroid_core
 COPY images/asteroid/files/system_files /
 #COPY images/asteroid/files/system_files/etc/os-release /etc
-
-RUN --mount=type=bind,from=asteroid_core,source=/,target=/asteroid_core \
-    --mount=type=cache,dst=/var/cache \
-    --mount=type=cache,dst=/var/log \
-    --mount=type=tmpfs,dst=/tmp \
-    /asteroid_core/scripts/setup/10-files.sh
+#
+# RUN --mount=type=bind,from=asteroid_core,source=/,target=/asteroid_core \
+#     --mount=type=cache,dst=/var/cache \
+#     --mount=type=cache,dst=/var/log \
+#     --mount=type=tmpfs,dst=/tmp \
+#     /asteroid_core/scripts/setup/10-files.sh
 
 
 RUN --mount=type=bind,from=asteroid_core,source=/,target=/asteroid_core \
@@ -33,6 +33,12 @@ RUN --mount=type=bind,from=asteroid_core,source=/,target=/asteroid_core \
     --mount=type=cache,dst=/var/log \
     --mount=type=tmpfs,dst=/tmp \
     /asteroid_core/scripts/setup/10-packages.sh
+
+RUN --mount=type=bind,from=asteroid_core,source=/,target=/asteroid_core \
+    --mount=type=cache,dst=/var/cache \
+    --mount=type=cache,dst=/var/log \
+    --mount=type=tmpfs,dst=/tmp \
+    /asteroid_core/scripts/setup/20-nix.sh
 
 # Finalize
 RUN --mount=type=bind,from=asteroid_core,source=/,target=/asteroid_core \
