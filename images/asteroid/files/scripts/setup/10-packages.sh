@@ -8,8 +8,8 @@ sed -i \
   /etc/makepkg.conf
 
 pacman --noconfirm -S git base-devel
-su builder -c "cd /build && git clone https://aur.archlinux.org/paru-bin.git && cd paru-bin && makepkg -si --noconfirm"
-rm -rf /build/paru-bin
+su builder -c "cd /build && git clone https://aur.archlinux.org/yay.git && cd yay && makepkg -si --noconfirm"
+rm -rf /build/yay
 
 # Kernel and NVIDIA
 pacman --noconfirm -R linux
@@ -26,7 +26,7 @@ pacman --noconfirm -S noto-fonts noto-fonts-cjk noto-fonts-emoji ttf-iosevka-ner
 
 # Apps
 pacman --noconfirm -S merkuro virt-manager qemu-desktop flatpak steam partitionmanager firefox bazaar vesktop
-su builder -c "paru --noconfirm -S visual-studio-code-bin vmware-workstation pear-desktop-bin"
+su builder -c "yay --noconfirm -S visual-studio-code-bin vmware-workstation pear-desktop-bin"
 
 
 ## Megasync
