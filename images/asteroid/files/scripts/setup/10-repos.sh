@@ -37,3 +37,5 @@ fingerprint="CF092EA23E35D9860BE17D62855052F456F587CF"
 pacman-key --init
 pacman-key --add - <<< "${key}"
 pacman-key --lsign-key "${fingerprint}"
+
+pacman -Syu
