@@ -14,6 +14,8 @@ if ! grep -q '^\[cachyos\]' /etc/pacman.conf; then
         'https://mirror.cachyos.org/repo/x86_64/cachyos/cachyos-mirrorlist-27-1-any.pkg.tar.zst' \
         'https://mirror.cachyos.org/repo/x86_64/cachyos/cachyos-v3-mirrorlist-27-1-any.pkg.tar.zst'
     sed -i '/^\[core\]/i [cachyos-v3]\nInclude = /etc/pacman.d/cachyos-v3-mirrorlist\n\n[cachyos]\nInclude = /etc/pacman.d/cachyos-mirrorlist\n' /etc/pacman.conf
+
+    sed -i 's/^Architecture = auto/Architecture = x86_64 x86_64_v3/' /etc/pacman.conf
 fi
 
 if ! grep -q '^DisableSandboxNetwork' /etc/pacman.conf; then
