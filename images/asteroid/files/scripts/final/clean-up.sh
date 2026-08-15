@@ -15,7 +15,9 @@ rm -f /etc/sudoers.d/builder
 userdel -r builder
 
 mv /opt /usr/share/factory
-rm /opt
+if [ -d /opt ]; then
+    rm -rf /opt
+fi
 ln -s /var/opt /opt
 
 echo "::endgroup::"
