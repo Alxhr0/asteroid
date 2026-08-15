@@ -2,6 +2,9 @@
 set -ouex pipefail
 
 # CachyOS repos - Credits to HuntedRaven7 (taken from blueprint)
+pacman-key --init
+
+
 mkdir -pv /tmp
 cd /tmp
 curl https://mirror.cachyos.org/cachyos-repo.tar.xz -o cachyos-repo.tar.xz
