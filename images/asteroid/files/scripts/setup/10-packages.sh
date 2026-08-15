@@ -41,6 +41,8 @@ cd /tmp
 wget https://mega.nz/linux/repo/Arch_Extra/x86_64/megasync-x86_64.pkg.tar.zst && pacman --noconfirm -U "$PWD/megasync-x86_64.pkg.tar.zst"
 wget https://mega.nz/linux/repo/Arch_Extra/x86_64/dolphin-megasync-x86_64.pkg.tar.zst && pacman --noconfirm -U "$PWD/dolphin-megasync-x86_64.pkg.tar.zst"
 
+pacman -Sy
+
 # Misc
 pacman --noconfirm -S deepinv20-white-cursors papirus-icon-theme man-pages networkmanager btrfs-progs
 
