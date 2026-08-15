@@ -19,7 +19,7 @@ pacman --noconfirm -S linux-cachyos linux-cachyos-headers
 pacman --noconfirm -S nvidia-open-dkms lib32-nvidia-utils
 
 # CLI tools
-pacman --noconfirm -S nushell eza bat zoxide btop htop uutils-coreutils distrobox podman fastfetch inetutils
+pacman --noconfirm -S nushell eza bat zoxide btop htop distrobox podman fastfetch inetutils dnsmasq
 
 # Fonts
 pacman --noconfirm -S noto-fonts noto-fonts-cjk noto-fonts-emoji ttf-iosevka-nerd ttf-iosevkaterm-nerd ttf-jetbrains-mono ttf-jetbrains-mono-nerd
@@ -44,7 +44,7 @@ wget https://mega.nz/linux/repo/Arch_Extra/x86_64/dolphin-megasync-x86_64.pkg.ta
 pacman -Sy
 
 # Misc
-pacman --noconfirm -S deepinv20-white-cursors papirus-icon-theme man-pages networkmanager btrfs-progs
+pacman --noconfirm -S deepinv20-white-cursors papirus-icon-theme man-pages networkmanager 
 
 
 systemctl enable NetworkManager libvirtd
