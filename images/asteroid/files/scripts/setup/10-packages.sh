@@ -7,19 +7,15 @@ sed -i \
   -e 's/^CXXFLAGS="[^"]*"/CXXFLAGS="\$CFLAGS"/' \
   /etc/makepkg.conf
 
-sed -i \
-  -e '/^OPTIONS=/ s/\bdebug\b/!debug/' \
-  /etc/makepkg.conf
-
 pacman --noconfirm -S git base-devel
-su builder -c "cd /build && git clone https://aur.archlinux.org/paru.git && cd paru && makepkg -si --noconfirm"
-rm -rf /build/paru
+su builder -c "cd /build && git clone https://aur.archlinux.org/paru-bin.git && cd paru-bin && makepkg -si --noconfirm"
+rm -rf /build/paru-bin
 
 # Kernel and NVIDIA
 pacman --noconfirm -R linux
 
 pacman --noconfirm -S linux-cachyos linux-cachyos-headers
-pacman --noconfim -S nvidia-open-dkms lib32-nvidia-utils
+pacman --noconfirm -S nvidia-open-dkms lib32-nvidia-utils
 
 # CLI tools
 pacman --noconfirm -S nushell eza bat zoxide btop htop uutils-coreutils distrobox podman
