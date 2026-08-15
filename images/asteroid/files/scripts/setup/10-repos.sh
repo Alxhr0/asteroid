@@ -19,14 +19,9 @@ if ! grep -q '^\[cachyos\]' /etc/pacman.conf; then
         'https://mirror.cachyos.org/repo/x86_64/cachyos/cachyos-keyring-20240331-1-any.pkg.tar.zst' \
         'https://mirror.cachyos.org/repo/x86_64/cachyos/cachyos-mirrorlist-27-1-any.pkg.tar.zst' \
         'https://mirror.cachyos.org/repo/x86_64/cachyos/cachyos-v3-mirrorlist-27-1-any.pkg.tar.zst' \
-        'https://mirror.cachyos.org/repo/x86_64/cachyos/cachyos-v4-mirrorlist-27-1-any.pkg.tar.zst'
 
     sed -i '/^\[core\]/i \
 [cachyos]\nInclude = /etc/pacman.d/cachyos-mirrorlist\n' /etc/pacman.conf
-fi
-
-if ! grep -q '^DisableSandboxNetwork' /etc/pacman.conf; then
-    sed -i '/^\[options\]/a DisableSandboxNetwork' /etc/pacman.conf
 fi
 
 pacman -Syu --noconfirm
@@ -35,9 +30,8 @@ pacman -Syu --noconfirm
 sed -i '/^#\[multilib\]/,/Include/ s/^#//' /etc/pacman.conf
 
 # home_Alxhr0 (my own repo)
-
+mkdir -pv /root/.gnupg
 echo -e "[home_Alxhr0_Arch]\nServer = https://download.opensuse.org/repositories/home:/Alxhr0/Arch/x86_64" >> /etc/pacman.conf
-
 key=$(curl -fsSL https://download.opensuse.org/repositories/home:Alxhr0/Arch/$(uname -m)/home_Alxhr0_Arch.key)
 fingerprint=$(gpg --quiet --with-colons --import-options show-only --import --fingerprint <<< "${key}" | awk -F: '$1 == "fpr" { print $10 }')
 
