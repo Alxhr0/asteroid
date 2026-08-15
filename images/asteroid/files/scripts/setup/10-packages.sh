@@ -2,9 +2,9 @@
 
 set -ouex pipefail
 # Bootstrap paru
-sed -i \
-  -e 's/^CFLAGS="[^"]*"/CFLAGS="-march=raptorlake -mtune=raptorlake -O3 -pipe -fno-plt"/' \
-  -e 's/^CXXFLAGS="[^"]*"/CXXFLAGS="\$CFLAGS"/' \
+sed -z -i \
+  -e 's/CFLAGS="[^"]*"/CFLAGS="-march=raptorlake -mtune=raptorlake -O3 -pipe -fno-plt"/' \
+  -e 's/CXXFLAGS="[^"]*"/CXXFLAGS="$CFLAGS"/' \
   /etc/makepkg.conf
 
 pacman --noconfirm -S git base-devel
