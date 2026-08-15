@@ -30,9 +30,6 @@ pacman --noconfirm -S merkuro virt-manager qemu-desktop flatpak steam partitionm
 rm /opt
 mkdir /opt
 
-# Install any package that writes into /opt
-mv /opt /usr/share/factory
-ln -s /var/opt /opt
 
 su builder -c "yay --noconfirm -S visual-studio-code-bin vmware-workstation pear-desktop-bin"
 
