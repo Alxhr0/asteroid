@@ -16,10 +16,10 @@ pacman --noconfirm -R linux
 
 mkdir -pv /var/tmp
 pacman --noconfirm -S linux-cachyos linux-cachyos-headers
-pacman --noconfirm -S nvidia-open-dkms lib32-nvidia-utils
+pacman --noconfirm -S nvidia-open-dkms lib32-nvidia-utils vulkan-intel lib32-vulkan-intel
 
 # CLI tools
-pacman --noconfirm -S nushell eza bat zoxide btop htop distrobox podman fastfetch inetutils dnsmasq hourglass
+pacman --noconfirm -S nushell eza bat zoxide btop htop distrobox podman fastfetch inetutils dnsmasq hourglass neovim man-db
 
 # Fonts
 pacman --noconfirm -S noto-fonts noto-fonts-cjk noto-fonts-emoji ttf-iosevka-nerd ttf-iosevkaterm-nerd ttf-jetbrains-mono ttf-jetbrains-mono-nerd
@@ -38,8 +38,12 @@ su builder -c "yay --noconfirm -S visual-studio-code-bin vmware-workstation pear
 pacman --noconfirm -S wget
 
 cd /tmp
+mv /usr/bin/megasync /usr/bin/megasync-bak
 wget https://mega.nz/linux/repo/Arch_Extra/x86_64/megasync-x86_64.pkg.tar.zst && pacman --noconfirm -U "$PWD/megasync-x86_64.pkg.tar.zst"
 wget https://mega.nz/linux/repo/Arch_Extra/x86_64/dolphin-megasync-x86_64.pkg.tar.zst && pacman --noconfirm -U "$PWD/dolphin-megasync-x86_64.pkg.tar.zst"
+
+mv /usr/bin/megasync /opt/megasync/megasync
+mv /usr/bin/megasync-bak /usr/bin/megasync
 
 pacman -Sy
 
@@ -48,3 +52,9 @@ pacman --noconfirm -S deepinv20-white-cursors papirus-icon-theme man-pages netwo
 
 
 systemctl enable NetworkManager libvirtd
+
+# Brew
+
+systemctl enable brew-setup.service
+systemctl enable brew-update.timer
+systemctl enable brew-upgrade.timer
