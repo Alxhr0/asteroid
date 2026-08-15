@@ -20,7 +20,7 @@ pacman --noconfim -S nvidia-open-dkms lib32-nvidia-utils
 pacman --noconfirm -S nushell eza bat zoxide btop htop uutils-coreutils distrobox podman
 
 # Fonts
-pacman --noconfirm -S noto-fonts noto-fonts-cjk noto-fonts-emoji
+pacman --noconfirm -S noto-fonts noto-fonts-cjk noto-fonts-emoji ttf-iosevka-nerd ttf-iosevkaterm-nerd ttf-jetbrains-mono ttf-jetbrains-mono-nerd
 
 # Apps
 pacman --noconfirm -S merkuro virt-manager qemu-desktop flatpak steam partitionmanager

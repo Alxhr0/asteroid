@@ -24,6 +24,11 @@ if ! grep -q '^\[cachyos\]' /etc/pacman.conf; then
 [cachyos]\nInclude = /etc/pacman.d/cachyos-mirrorlist\n' /etc/pacman.conf
 fi
 
+
+if ! grep -q '^DisableSandboxNetwork' /etc/pacman.conf; then
+    sed -i '/^\[options\]/a DisableSandboxNetwork' /etc/pacman.conf
+fi
+
 pacman -Syu --noconfirm
 
 # Enable multilib
@@ -38,4 +43,4 @@ pacman-key --init
 pacman-key --add - <<< "${key}"
 pacman-key --lsign-key "${fingerprint}"
 
-pacman -Syu
+pacman -Syu --noconfirm
