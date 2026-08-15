@@ -105,12 +105,12 @@ jobs:
           labels: ${{ steps.metadata.outputs.labels }}
           oci: false
 
-      - name: Rechunk with Chunkah
-        id: rechunk
-        run: |
-          just rechunk \
-            "${IMAGE_NAME}" \
-            "${DEFAULT_TAG}"
+      # - name: Rechunk with Chunkah
+      #   id: rechunk
+      #   run: |
+      #     just rechunk \
+      #       "${IMAGE_NAME}" \
+      #       "${DEFAULT_TAG}"
 
       # This is necessary so that the podman socket can find the rechunked image on its storage
       # - name: Load in podman and tag
