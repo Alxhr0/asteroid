@@ -8,6 +8,6 @@ pacman --noconfirm -S plasma plasma-login-manager dolphin kate gwenview okular p
 pacman --noconfirm -S mariadb
 mariadb-install-db --user=mysql --basedir=/usr --datadir=/var/lib/mysql
 
-su builder -c "yay --noconfirm -S klassy-bin kf6-servicemenus-imagetools"
+su builder -c "yay --noconfirm -S klassy kf6-servicemenus-imagetools"
 
 systemctl enable plasmalogin
