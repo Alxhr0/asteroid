@@ -19,7 +19,7 @@ pacman --noconfirm -S linux-cachyos linux-cachyos-headers
 pacman --noconfirm -S nvidia-open-dkms lib32-nvidia-utils
 
 # CLI tools
-pacman --noconfirm -S nushell eza bat zoxide btop htop distrobox podman fastfetch inetutils dnsmasq
+pacman --noconfirm -S nushell eza bat zoxide btop htop distrobox podman fastfetch inetutils dnsmasq hourglass
 
 # Fonts
 pacman --noconfirm -S noto-fonts noto-fonts-cjk noto-fonts-emoji ttf-iosevka-nerd ttf-iosevkaterm-nerd ttf-jetbrains-mono ttf-jetbrains-mono-nerd
