@@ -8,5 +8,4 @@ pacman --noconfirm -S plasma plasma-login-manager dolphin kate gwenview okular p
 
 su builder -c "yay --noconfirm -S klassy kf6-servicemenus-imagetools"
 
-
 systemctl enable plasmalogin
