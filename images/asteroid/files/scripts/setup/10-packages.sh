@@ -1,14 +1,19 @@
 #!/bin/bash
 
 set -ouex pipefail
-
 # Bootstrap paru
+sed -i \
+  -e 's/^CFLAGS="[^"]*"/CFLAGS="-march=raptorlake -mtune=raptorlake -O3 -pipe -fno-plt"/' \
+  -e 's/^CXXFLAGS="[^"]*"/CXXFLAGS="\$CFLAGS"/' \
+  /etc/makepkg.conf
+
+sed -i \
+  -e '/^OPTIONS=/ s/\bdebug\b/!debug/' \
+  /etc/makepkg.conf
+
 pacman --noconfirm -S git base-devel
-cd /tmp
-git clone https://aur.archlinux.org/paru.git
-cd paru
-makepkg --noconfirm -si
-rm -rf /tmp/paru
+su builder -c "cd /build && git clone https://aur.archlinux.org/paru.git && cd paru && makepkg -si --noconfirm"
+rm -rf /build/paru
 
 # Kernel and NVIDIA
 pacman --noconfirm -R linux
