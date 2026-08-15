@@ -25,7 +25,7 @@ pacman --noconfirm -S nushell eza bat zoxide btop htop distrobox podman fastfetc
 pacman --noconfirm -S noto-fonts noto-fonts-cjk noto-fonts-emoji ttf-iosevka-nerd ttf-iosevkaterm-nerd ttf-jetbrains-mono ttf-jetbrains-mono-nerd
 
 # Apps
-pacman --noconfirm -S merkuro virt-manager qemu-desktop flatpak steam partitionmanager firefox bazaar vesktop solaar
+pacman --noconfirm -S merkuro virt-manager qemu-desktop flatpak steam partitionmanager firefox vesktop solaar
 
 rm /opt
 mkdir /opt
