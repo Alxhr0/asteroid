@@ -14,10 +14,9 @@ find /var/cache/* -maxdepth 0 -type d \! -name libdnf5 \! -name rpm-ostree -exec
 rm -f /etc/sudoers.d/builder
 userdel -r builder
 
-mv /opt /usr/share/factory
-if [ -d /opt ]; then
-    rm -rf /opt
+if [ -d /opt ] && [ ! -L /opt ]; then
+    mv /opt /usr/share/factory
 fi
-ln -s /var/opt /opt
+ln -sfn /var/opt /opt
 
 echo "::endgroup::"
