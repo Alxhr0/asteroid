@@ -53,8 +53,7 @@ pacman -Sy
 pacman --noconfirm -S deepinv20-white-cursors papirus-icon-theme man-pages networkmanager 
 
 
-systemctl enable NetworkManager libvirtd bluetooth
-
+systemctl enable NetworkManager libvirtd
 # Brew
 
 systemctl enable brew-setup.service
