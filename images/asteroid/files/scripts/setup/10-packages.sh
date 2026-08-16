@@ -33,6 +33,8 @@ mkdir /opt
 
 su builder -c "yay --noconfirm -S visual-studio-code-bin vmware-workstation pear-desktop-bin"
 
+## Fix Youtube Music
+sed -i 's|/opt/YouTube\\ Music/youtube-music|/usr/share/factory/opt/YouTube\\ Music/youtube-music|' /usr/bin/youtube-music
 
 ## Megasync
 pacman --noconfirm -S wget
@@ -51,7 +53,7 @@ pacman -Sy
 pacman --noconfirm -S deepinv20-white-cursors papirus-icon-theme man-pages networkmanager 
 
 
-systemctl enable NetworkManager libvirtd
+systemctl enable NetworkManager libvirtd bluetooth
 
 # Brew
 

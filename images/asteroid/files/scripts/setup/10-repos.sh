@@ -32,6 +32,18 @@ else
     printf '\n[multilib]\nInclude = /etc/pacman.d/mirrorlist\n' >> /etc/pacman.conf
 fi
 
+# home_paulmcauley (Klassy)
+if ! grep -q '^\[home_paulmcauley_Arch\]' /etc/pacman.conf; then
+    printf '\n[home_paulmcauley_Arch]\nServer = https://download.opensuse.org/repositories/home:/paulmcauley/Arch/x86_64\n' >> /etc/pacman.conf
+fi
+
+key=$(curl -fsSL https://download.opensuse.org/repositories/home:paulmcauley/Arch/$(uname -m)/home_paulmcauley_Arch.key)
+fingerprint=$(gpg --quiet --with-colons --import-options show-only --import --fingerprint <<< "${key}" | awk -F: '$1 == "fpr" { print $10 }')
+
+pacman-key --init
+pacman-key --add - <<< "${key}"
+pacman-key --lsign-key "${fingerprint}"
+
 # home_Alxhr0 (my own repo)
 if ! grep -q '^\[home_Alxhr0_Arch\]' /etc/pacman.conf; then
     printf '\n[home_Alxhr0_Arch]\nServer = https://download.opensuse.org/repositories/home:/Alxhr0/Arch/x86_64\n' >> /etc/pacman.conf
