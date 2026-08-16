@@ -38,7 +38,7 @@ if ! grep -q '^\[home_paulmcauley_Arch\]' /etc/pacman.conf; then
 fi
 
 key=$(curl -fsSL https://download.opensuse.org/repositories/home:paulmcauley/Arch/$(uname -m)/home_paulmcauley_Arch.key)
-fingerprint=$(gpg --quiet --with-colons --import-options show-only --import --fingerprint <<< "${key}" | awk -F: '$1 == "fpr" { print $10 }')
+fingerprint="BB57F2E451C9B8AE8425C0911BC8C8A452A5ED36"
 
 pacman-key --init
 pacman-key --add - <<< "${key}"
