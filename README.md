@@ -6,4 +6,4 @@ Image born from an *Asteroid* ☄
 > This image is only for me, so don't expect much support.
 
 ## INFO
-* Base: [Bazzite](https://github.com/ublue-os/bazzite)
+* Base: [Blueprint:Arch](https://github.com/HuntedRaven7/blueprint)
