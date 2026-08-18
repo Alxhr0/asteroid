@@ -33,13 +33,13 @@ RUN --mount=type=bind,from=asteroid_core,source=/,target=/asteroid_core \
     --mount=type=cache,dst=/var/cache \
     --mount=type=cache,dst=/var/log \
     --mount=type=tmpfs,dst=/tmp \
-    /asteroid_core/scripts/setup/packages/00-bootstrap.sh
+    /asteroid_core/scripts/setup/packages/00-repos.sh
 
 RUN --mount=type=bind,from=asteroid_core,source=/,target=/asteroid_core \
     --mount=type=cache,dst=/var/cache \
     --mount=type=cache,dst=/var/log \
     --mount=type=tmpfs,dst=/tmp \
-    /asteroid_core/scripts/setup/packages/10-repos.sh
+    /asteroid_core/scripts/setup/packages/10-bootstrap.sh
 
 RUN --mount=type=bind,from=asteroid_core,source=/,target=/asteroid_core \
     --mount=type=cache,dst=/var/cache \

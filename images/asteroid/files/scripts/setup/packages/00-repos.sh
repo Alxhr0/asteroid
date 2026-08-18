@@ -1,6 +1,24 @@
 #!/bin/bash
 set -ouex pipefail
 
+# Switch to local mirror's
+tee -a /etc/pacman.d/mirrorlist << 'EOF'
+## Poland
+Server = http://mirror.alldaydev.com/archlinux/$repo/os/$arch
+Server = https://mirror.alldaydev.com/archlinux/$repo/os/$arch
+Server = http://ftp.icm.edu.pl/pub/Linux/dist/archlinux/$repo/os/$arch
+Server = https://ftp.icm.edu.pl/pub/Linux/dist/archlinux/$repo/os/$arch
+Server = http://mirror.juniorjpdj.pl/archlinux/$repo/os/$arch
+Server = https://mirror.juniorjpdj.pl/archlinux/$repo/os/$arch
+Server = http://arch.midov.pl/arch/$repo/os/$arch
+Server = https://arch.midov.pl/arch/$repo/os/$arch
+Server = http://ftp.psnc.pl/linux/archlinux/$repo/os/$arch
+Server = https://ftp.psnc.pl/linux/archlinux/$repo/os/$arch
+Server = http://arch.sakamoto.pl/$repo/os/$arch
+Server = https://arch.sakamoto.pl/$repo/os/$arch
+EOF
+
+
 # CachyOS repos - Credits to HuntedRaven7 (taken from blueprint)
 CACHYOS_KEY="F3B607488DB35A47"
 if ! pacman-key -l | grep -q "${CACHYOS_KEY}"; then
