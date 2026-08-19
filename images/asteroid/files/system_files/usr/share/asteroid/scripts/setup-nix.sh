@@ -38,6 +38,8 @@ while IFS=: read -r username _ uid _ _ _ shell; do
     fi
 done < /etc/passwd
 
+mkdir -pv /etc/environment.d
+
 # Make Nix available in all contexts (login shells, systemd services, etc.)
 echo 'PATH="${PATH}:/nix/var/nix/profiles/default/bin:/nix/var/nix/profiles/default/sbin"' > /etc/environment.d/50-nix.conf
 
