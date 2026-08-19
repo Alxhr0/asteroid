@@ -1,6 +1,5 @@
 NAME="Asteroid"
 ID=asteroid
-VERSION_ID=43
 VERSION_CODENAME="asteroid"
 PRETTY_NAME="Asteroid"
 LOGO=asteroid-logo
