@@ -5,7 +5,7 @@ set -ouex pipefail
 
 # Install Nix in daemon mode if not already present
 if ! command -v nix > /dev/null 2>&1; then
-    curl -fsSL https://install.determinate.systems/nix | sh -s -- install
+    curl -fsSL https://install.determinate.systems/nix | sh -s -- install ostree --no-confirm
 fi
 
 # Enable experimental features (idempotent)
