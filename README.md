@@ -6,4 +6,4 @@ Image born from an *Asteroid* ☄
 > This image is only for me, so don't expect much support.
 
 ## INFO
-* Base: [Blueprint:Arch](https://github.com/HuntedRaven7/blueprint)
+* Base: [arch-bootc](https://github.com/HuntedRaven7/blueprint)
