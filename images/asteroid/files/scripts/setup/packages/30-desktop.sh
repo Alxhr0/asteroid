@@ -11,6 +11,7 @@ mariadb-install-db --user=mysql --basedir=/usr --datadir=/var/lib/mysql
 
 su builder -c "yay --noconfirm -S kf6-servicemenus-imagetools"
 
+pacman --noconfirm -R plasma-bigscreen
 
 mv /usr/share/plymouth/themes/spinner/watermark.png.bak /usr/share/plymouth/themes/spinner/watermark.png
 systemctl enable plasmalogin

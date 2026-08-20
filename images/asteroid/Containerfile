@@ -3,7 +3,7 @@ FROM scratch AS asteroid_core
 COPY images/asteroid/files /
 
 # Base Image
-FROM  ghcr.io/huntedraven7/blueprint:arch
+FROM ghcr.io/huntedraven7/arch-bootc:testing
 
 # Copy asteroid_core
 COPY images/asteroid/files/system_files /
