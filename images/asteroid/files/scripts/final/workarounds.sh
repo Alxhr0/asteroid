@@ -9,6 +9,8 @@ sed -i 's|/opt/YouTube\\ Music/youtube-music|/usr/share/factory/opt/YouTube\\ Mu
 mv /usr/bin/megasync /opt/megasync/megasync
 mv /usr/bin/megasync-bak /usr/bin/megasync
 
+cp -r /usr/share/megasync/resources/* /opt/megasync
+
 # Fix /opt
 if [ -d /opt ] && [ ! -L /opt ]; then
     mv /opt /usr/share/factory
