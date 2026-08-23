@@ -13,6 +13,7 @@ find /var/cache/* -maxdepth 0 -type d  -exec rm -fr {} \;
 
 rm -f /etc/sudoers.d/builder
 userdel -r builder
+rm -r /build
 
 if [ -d /opt ] && [ ! -L /opt ]; then
     mv /opt /usr/share/factory

@@ -15,8 +15,10 @@ rm /opt
 mkdir /opt
 
 # AUR packages
-su builder -c "yay --noconfirm -S visual-studio-code-bin vmware-workstation pear-desktop-bin"
+su builder -c "yay --noconfirm -S visual-studio-code-bin pear-desktop-bin"
 
+su builder -c "cd /build && git clone https://aur.archlinux.org/vmware-workstation.git && cd vmware-workstation && makepkg --noconfirm -si"
+rm -r /build/vmware-workstation
 
 ## Megasync
 pacman --noconfirm -S wget
@@ -25,8 +27,6 @@ cd /tmp
 mv /usr/bin/megasync /usr/bin/megasync-bak
 wget https://mega.nz/linux/repo/Arch_Extra/x86_64/megasync-x86_64.pkg.tar.zst && pacman --noconfirm -U "$PWD/megasync-x86_64.pkg.tar.zst"
 wget https://mega.nz/linux/repo/Arch_Extra/x86_64/dolphin-megasync-x86_64.pkg.tar.zst && pacman --noconfirm -U "$PWD/dolphin-megasync-x86_64.pkg.tar.zst"
-
-
 pacman -Sy
 
 # Misc
