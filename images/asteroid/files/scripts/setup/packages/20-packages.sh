@@ -15,10 +15,10 @@ rm /opt
 mkdir /opt
 
 # AUR packages
-su builder -c "yay --noconfirm -S visual-studio-code-bin pear-desktop-bin"
+su builder -c "yay --noconfirm -S visual-studio-code-bin vmware-workstation pear-desktop-bin"
 
-su builder -c "cd /build && git clone https://aur.archlinux.org/vmware-workstation.git && cd vmware-workstation && makepkg --noconfirm -si"
-rm -r /build/vmware-workstation
+# su builder -c "cd /build && git clone https://aur.archlinux.org/vmware-workstation.git && cd vmware-workstation && makepkg --noconfirm -si"
+# rm -r /build/vmware-workstation
 
 ## Megasync
 pacman --noconfirm -S wget
