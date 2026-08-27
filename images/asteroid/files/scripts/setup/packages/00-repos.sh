@@ -51,16 +51,16 @@ else
 fi
 
 # home_paulmcauley (Klassy)
-if ! grep -q '^\[home_paulmcauley_Arch\]' /etc/pacman.conf; then
-    printf '\n[home_paulmcauley_Arch]\nServer = https://download.opensuse.org/repositories/home:/paulmcauley/Arch/x86_64\n' >> /etc/pacman.conf
-fi
+# if ! grep -q '^\[home_paulmcauley_Arch\]' /etc/pacman.conf; then
+#     printf '\n[home_paulmcauley_Arch]\nServer = https://download.opensuse.org/repositories/home:/paulmcauley/Arch/x86_64\n' >> /etc/pacman.conf
+# fi
 
-key=$(curl -fsSL https://download.opensuse.org/repositories/home:paulmcauley/Arch/$(uname -m)/home_paulmcauley_Arch.key)
-fingerprint="BB57F2E451C9B8AE8425C0911BC8C8A452A5ED36"
+# key=$(curl -fsSL https://download.opensuse.org/repositories/home:paulmcauley/Arch/$(uname -m)/home_paulmcauley_Arch.key)
+# fingerprint="BB57F2E451C9B8AE8425C0911BC8C8A452A5ED36"
 
-pacman-key --init
-pacman-key --add - <<< "${key}"
-pacman-key --lsign-key "${fingerprint}"
+# pacman-key --init
+# pacman-key --add - <<< "${key}"
+# pacman-key --lsign-key "${fingerprint}"
 
 # home_Alxhr0 (my own repo)
 if ! grep -q '^\[home_Alxhr0_Arch\]' /etc/pacman.conf; then
