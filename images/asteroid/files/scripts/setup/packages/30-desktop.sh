@@ -4,7 +4,7 @@ set -ouex pipefail
 
 
 mv /usr/share/plymouth/themes/spinner/watermark.png /usr/share/plymouth/themes/spinner/watermark.png.bak
-pacman --noconfirm -S plasma plasma-login-manager dolphin kate gwenview okular partitionmanager kcalc kcolorchooser ark merkuro kdepim-addons bluez konsole klassy
+pacman --noconfirm -S plasma plasma-login-manager dolphin kate gwenview okular partitionmanager kcalc kcolorchooser ark merkuro kdepim-addons bluez konsole
 
 pacman --noconfirm -S mariadb
 mariadb-install-db --user=mysql --basedir=/usr --datadir=/var/lib/mysql
