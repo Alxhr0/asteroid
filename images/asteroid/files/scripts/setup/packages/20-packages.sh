@@ -5,6 +5,9 @@ set -ouex pipefail
 # CLI tools
 pacman --noconfirm -S nushell eza bat zoxide btop htop distrobox podman fastfetch inetutils dnsmasq hourglass neovim man-db
 
+## Replace GNU Coreutils with UUtils Coreutils
+pacman -S --noconfirm --ask=4 uutils-coreutils
+
 # Fonts
 pacman --noconfirm -S noto-fonts noto-fonts-cjk noto-fonts-emoji ttf-iosevka-nerd ttf-iosevkaterm-nerd ttf-jetbrains-mono ttf-jetbrains-mono-nerd
 
@@ -21,8 +24,6 @@ su builder -c "yay --noconfirm -S visual-studio-code-bin vmware-workstation pear
 # rm -r /build/vmware-workstation
 
 ## Megasync
-pacman --noconfirm -S wget
-
 cd /tmp
 mv /usr/bin/megasync /usr/bin/megasync-bak
 wget https://mega.nz/linux/repo/Arch_Extra/x86_64/megasync-x86_64.pkg.tar.zst && pacman --noconfirm -U "$PWD/megasync-x86_64.pkg.tar.zst"
