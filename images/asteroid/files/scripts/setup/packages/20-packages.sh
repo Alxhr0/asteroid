@@ -5,9 +5,6 @@ set -ouex pipefail
 # CLI tools
 pacman --noconfirm -S nushell eza bat zoxide btop htop distrobox podman fastfetch inetutils dnsmasq hourglass neovim man-db
 
-## Replace GNU Coreutils with UUtils Coreutils
-pacman -S --noconfirm --ask=4 uutils-coreutils
-
 # Fonts
 pacman --noconfirm -S noto-fonts noto-fonts-cjk noto-fonts-emoji ttf-iosevka-nerd ttf-iosevkaterm-nerd ttf-jetbrains-mono ttf-jetbrains-mono-nerd
 
@@ -18,7 +15,7 @@ rm /opt
 mkdir /opt
 
 # AUR packages
-su builder -c "yay --noconfirm -S visual-studio-code-bin vmware-workstation pear-desktop-bin"
+su builder -c "yay --noconfirm -S visual-studio-code-bin vmware-workstation"
 
 # su builder -c "cd /build && git clone https://aur.archlinux.org/vmware-workstation.git && cd vmware-workstation && makepkg --noconfirm -si"
 # rm -r /build/vmware-workstation
