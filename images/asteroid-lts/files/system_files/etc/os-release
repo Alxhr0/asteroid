@@ -1,0 +1,8 @@
+NAME="Asteroid LTS"
+ID=asteroid
+VERSION_CODENAME="asteroid"
+PRETTY_NAME="Asteroid LTS"
+LOGO=asteroid-logo
+DEFAULT_HOSTNAME="asteroid"
+VARIANT_ID=asteroid
+

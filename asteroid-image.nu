@@ -1,8 +1,6 @@
 # Here we set a bunch of parameters for your image build
 
 # output image name, usually same as repo name, change as needed
-let IMAGE_NAME = "asteroid"
-
 # Make this the same as your github username/organisation
 let REPO_ORGANIZATION = "alxhr0"
 
