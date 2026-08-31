@@ -1,4 +1,4 @@
 #!/bin/bash
 set -ouex pipefail
 
-dnf swap --allowerasing ffmpeg-free ffmpeg 
+dnf -y swap --allowerasing ffmpeg-free ffmpeg 
