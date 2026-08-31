@@ -3,11 +3,13 @@
 set -ouex pipefail
 
 # Kernel
-DEBIAN_FRONTEND=noninteractive apt-get remove -y linux-image-generic
-DEBIAN_FRONTEND=noninteractive apt-get install -y linux-xanmod-x64v3
-
-DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends dkms libelf-dev clang lld llvm
-
+dnf -y remove "kernel*"
+dnf -y install --setopt=tsflags=noscripts kernel-cachyos-lto kernel-cachyos-lto-devel-matched
+KVER=$(rpm -q kernel-cachyos-lto-core --qf '%{version}-%{release}.%{arch}\n')
+depmod -a "$KVER" && \
+kernel-install add "$KVER" /usr/lib/modules/"$KVER"/vmlinuz
 
 # NVIDIA
-DEBIAN_FRONTEND=noninteractive apt-get install -y nvidia-driver-610-open
+dnf -y install akmod-nvidia xorg-x11-drv-nvidia-cuda
+akmods --force --kernels "$KVER"
+depmod -a "$KVER"

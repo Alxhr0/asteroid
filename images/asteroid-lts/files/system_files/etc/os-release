@@ -5,4 +5,3 @@ PRETTY_NAME="Asteroid LTS"
 LOGO=asteroid-logo
 DEFAULT_HOSTNAME="asteroid"
 VARIANT_ID=asteroid
-

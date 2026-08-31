@@ -1,6 +1,6 @@
 FROM scratch AS asteroid_core
 
-COPY files /
+COPY build_files/system /
 COPY images/asteroid/files /
 
 # Base Image

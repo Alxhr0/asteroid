@@ -4,36 +4,26 @@ set -ouex pipefail
 
 # CLI tools
 rm -r /root
-DEBIAN_FRONTEND=noninteractive apt-get install -y nushell eza bat zoxide btop htop distrobox podman fastfetch dnsmasq man-db
-ln -s /bin/batcat /bin/bat
+dnf -y install nushell eza bat zoxide btop htop distrobox podman fastfetch dnsmasq man-db hourglass
+rm -r /root
+ln -sT /var/roothome /root
 
 # Fonts
-DEBIAN_FRONTEND=noninteractive apt-get install -y "fonts-noto-*" fonts-jetbrains-mono
+dnf -y install "google-noto-*" iosevkaterm-nerd-fonts iosevka-nerd-fonts jetbrains-mono-fonts-all
 
 # Apps
-DEBIAN_FRONTEND=noninteractive apt-get install -y virt-manager qemu-system flatpak steam solaar code
+dnf -y install virt-manager qemu flatpak steam solaar code firefox code vesktop
 
 rm /opt
 mkdir /opt
 
-# AUR packages
-#su builder -c "yay --noconfirm -S visual-studio-code-bin vmware-workstation"
-
-PACSTALL_DOWNLOADER=wget pacstall -Ns -P -I hourglass
-
-# su builder -c "cd /build && git clone https://aur.archlinux.org/vmware-workstation.git && cd vmware-workstation && makepkg --noconfirm -si"
-# rm -r /build/vmware-workstation
-
 ## Megasync
 cd /tmp
 mv /usr/bin/megasync /usr/bin/megasync-bak
-wget https://mega.nz/linux/repo/xUbuntu_26.04/amd64/megasync-xUbuntu_26.04_amd64.deb && DEBIAN_FRONTEND=noninteractive apt-get install -y "$PWD/megasync-xUbuntu_26.04_amd64.deb"
-wget https://mega.nz/linux/repo/xUbuntu_26.04/amd64/dolphin-megasync-xUbuntu_26.04_amd64.deb && DEBIAN_FRONTEND=noninteractive apt-get install -y "$PWD/dolphin-megasync-xUbuntu_26.04_amd64.deb"
-apt-get update
+wget https://mega.nz/linux/repo/Fedora_44/x86_64/megasync-Fedora_44.x86_64.rpm && dnf -y --setopt=tsflags=noscripts install "$PWD/megasync-Fedora_44.x86_64.rpm"
+wget https://mega.nz/linux/repo/Fedora_44/x86_64/dolphin-megasync-Fedora_44.x86_64.rpm && dnf -y --setopt=tsflags=noscripts install "$PWD/dolphin-megasync-Fedora_44.x86_64.rpm"
 
 # Misc
-DEBIAN_FRONTEND=noninteractive apt-get install -y papirus-icon-theme manpages network-manager ubuntu-restricted-extras
-PACSTALL_DOWNLOADER=wget pacstall -Ns -P -I deepinv20-white-cursors-git
-
+dnf -y install papirus-icon-theme man-pages deepinv20-white-cursors
 
 

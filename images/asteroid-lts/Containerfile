@@ -1,16 +1,18 @@
 FROM scratch AS asteroid_core
 
-COPY files /
+COPY build_files/system /
 COPY images/asteroid-lts/files /
 
 # Base Image
-FROM ghcr.io/huntedraven7/ubuntu-bootc:testing
+FROM quay.io/fedora/fedora-kinoite:44
 
 # Copy asteroid_core
-COPY images/asteroid/files/system_files /
+COPY images/asteroid-lts/files/system_files /
 
 # Brew
 COPY --from=ghcr.io/ublue-os/brew:latest /system_files /
+
+ARG BUILD_ID=1
 
 RUN --mount=type=bind,from=asteroid_core,source=/,target=/asteroid_core \
     --mount=type=cache,dst=/var/cache \
@@ -45,7 +47,6 @@ RUN --mount=type=bind,from=asteroid_core,source=/,target=/asteroid_core \
 RUN --mount=type=bind,from=asteroid_core,source=/,target=/asteroid_core \
     --mount=type=cache,dst=/var/cache \
     --mount=type=cache,dst=/var/log \
-    --mount=type=tmpfs,dst=/tmp \
     /asteroid_core/scripts/setup/kernel/install.sh
 
 RUN --mount=type=bind,from=asteroid_core,source=/,target=/asteroid_core \

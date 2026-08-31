@@ -107,7 +107,7 @@ build $target_image $tag="":
     tag="{{ tag }}"
     tag="${tag:-${DEFAULT_TAG}}"
 
-    BUILD_ARGS=()
+    BUILD_ARGS+=("--build-arg" "BUILD_ID=$(git rev-parse HEAD 2>/dev/null || date +%s)")
     LABELS=()
     if [[ -z "$(git status -s)" ]]; then
         GIT_SHA=$(git rev-parse --short HEAD)
