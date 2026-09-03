@@ -4,7 +4,7 @@ set -ouex pipefail
 
 # CLI tools
 rm -r /root
-dnf -y install nushell eza bat zoxide btop htop distrobox podman fastfetch dnsmasq man-db hourglass
+dnf -y install nushell eza bat zoxide just btop htop distrobox podman fastfetch dnsmasq man-db hourglass
 rm -r /root
 ln -sT /var/roothome /root
 
