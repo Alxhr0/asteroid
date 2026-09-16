@@ -7,4 +7,3 @@ Image born from an *Asteroid* ☄
 
 ## INFO
 * Asteroid - base: [arch-bootc](https://github.com/HuntedRaven7/blueprint)
-* Asteroid LTS - base: Fedora Kinoite

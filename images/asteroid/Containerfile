@@ -66,6 +66,12 @@ RUN --mount=type=bind,from=asteroid_core,source=/,target=/asteroid_core \
     --mount=type=tmpfs,dst=/tmp \
     /asteroid_core/scripts/setup/20-services.sh
 
+RUN --mount=type=bind,from=asteroid_core,source=/,target=/asteroid_core \
+    --mount=type=cache,dst=/var/cache \
+    --mount=type=cache,dst=/var/log \
+    --mount=type=tmpfs,dst=/tmp \
+    /asteroid_core/scripts/setup/30-info.sh
+
 # Finalize
 RUN --mount=type=bind,from=asteroid_core,source=/,target=/asteroid_core \
     --mount=type=cache,dst=/var/cache \

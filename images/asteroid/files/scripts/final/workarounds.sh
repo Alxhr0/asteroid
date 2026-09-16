@@ -17,4 +17,3 @@ if [ -d /opt ] && [ ! -L /opt ]; then
 fi
 ln -sfn /var/opt /opt
 
-

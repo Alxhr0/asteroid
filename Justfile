@@ -98,7 +98,7 @@ _load-image-env target_image:
 #   just build asteroid-lts stable
 
 # Build the image using the specified parameters
-build $target_image $tag="":
+build $target_image $tag="" *extra_args="":
     #!/usr/bin/env bash
 
     set -euox pipefail
@@ -133,7 +133,7 @@ build $target_image $tag="":
     # This actually builds the image!
     PODMAN_BUILD_ARGS=("${BUILD_ARGS[@]}" "${LABELS[@]}" --pull=newer --tag "{{ target_image }}:${tag}" --file ./images/{{ target_image }}/Containerfile)
 
-    podman build "${PODMAN_BUILD_ARGS[@]}" .
+    podman build "${PODMAN_BUILD_ARGS[@]}" {{ extra_args }} .
 
 # Split the image for smaller updates (New)!
 rechunk $target_image $tag="":
@@ -152,7 +152,7 @@ rechunk $target_image $tag="":
     CHUNKAH_CONFIG_FILE="$(mktemp)"
 
     # You may omit the current directory here if you are confident that you
-    # won't run out of space on /tmp for your image
+    # wont run out of space on /tmp for your image
     CHUNKAH_OUTPUT_DIR="$(mktemp -d ./"{{ target_image }}"_chunkah_XXXXXX)"
 
     trap 'rm -f "${CHUNKAH_CONFIG_FILE}"; rm -rf "${CHUNKAH_OUTPUT_DIR}"' EXIT
@@ -324,37 +324,157 @@ _rootful_load_image $target_image $tag="":
 #   type: The type of image to build (ex. qcow2, raw, iso)
 #   config: The configuration file to use for the build (default: disk_config/disk.toml)
 
-# Example: just _build-bib localhost/asteroid-lts latest qcow2 disk_config/disk.toml
-_build-bib $target_image $tag $type $config: (_rootful_load_image target_image tag)
+# Run bootc directly against a container image inside rootful Podman
+# Example: just bootc asteroid-lts latest -- --help
+# Run bootc directly against a container image inside rootful Podman
+# Example: just bootc asteroid-lts latest -- --help
+# Run bootc directly against a container image inside rootful Podman
+# Example: just bootc asteroid-lts latest -- --help
+[private]
+bootc $target_image $tag="" *ARGS: (_rootful_load_image target_image tag)
     #!/usr/bin/env bash
     set -euo pipefail
 
     image_dir="{{ target_image }}"
     image_dir="${image_dir#localhost/}"
     source ./images/${image_dir}/image.env
+    tag="{{ tag }}"
+    tag="${tag:-${DEFAULT_TAG}}"
 
-    args="--type {{ type }} "
-    args+="--use-librepo=True "
-    args+="--rootfs=btrfs"
+    BOOTC_INSTALL_OPTIONS=()
+    BOOTC_INSTALL_OPTIONS+=("-v" "/var/lib/containers/storage:/var/lib/containers/storage")
+    BOOTC_INSTALL_OPTIONS+=("-v" "/etc/containers:/etc/containers")
+    BOOTC_INSTALL_OPTIONS+=("-v" "/dev:/dev")
+    BOOTC_INSTALL_OPTIONS+=("-v" "/sys:/sys")
+    BOOTC_INSTALL_OPTIONS+=("-v" "/run:/run")
 
-    BUILDTMP=$(mktemp -p "${PWD}" -d -t _build-bib.XXXXXXXXXX)
+    if [[ -d /sys/firmware/efi ]]; then
+        BOOTC_INSTALL_OPTIONS+=("-v" "/sys/firmware/efi:/sys/firmware/efi")
+    fi
+
+    if [[ -d /sys/fs/selinux ]]; then
+        BOOTC_INSTALL_OPTIONS+=("-v" "/sys/fs/selinux:/sys/fs/selinux" "--security-opt" "label=type:unconfined_t")
+    fi
+
+    just sudoif podman run \
+        --rm --privileged --pid=host \
+        -it \
+        "${BOOTC_INSTALL_OPTIONS[@]}" \
+        -v "${PWD}:/data" \
+        "localhost/${image_dir}:${tag}" bootc {{ ARGS }}
+
+# Create a raw bootable disk image using `bootc install to-disk`
+# Arguments:
+#   target_image: Name of image directory (e.g. asteroid-lts)
+#   tag: Image tag (defaults to DEFAULT_TAG in image.env)
+#   backend: OSTree backend ("ostree" or "composefs")
+#   img_size: Size allocated for the raw disk image (default: 40G)
+#
+# Example: just disk-image asteroid-lts latest ostree 35G
+# Create a raw bootable disk image using `bootc install to-disk`
+# Arguments:
+#   target_image: Name of image directory (e.g. asteroid-lts)
+#   tag: Image tag (defaults to DEFAULT_TAG in image.env)
+#   backend: OSTree backend ("ostree" or "composefs")
+#   img_size: Size allocated for the raw disk image (default: 40G)
+#   fs_type: Root filesystem type ("btrfs", "ext4", or "xfs")
+#
+# Example: just disk-image asteroid-lts latest ostree 35G btrfs
+# Create a raw bootable disk image using `bootc install to-disk`
+# Arguments:
+#   target_image: Name of image directory (e.g. asteroid-lts)
+#   tag: Image tag (defaults to DEFAULT_TAG in image.env)
+#   backend: OSTree backend ("ostree" or "composefs")
+#   img_size: Size allocated for the raw disk image (default: 40G)
+#   fs_type: Root filesystem type ("btrfs", "ext4", or "xfs")
+#
+# Example: just disk-image asteroid-lts latest ostree 35G btrfs
+# Create a raw bootable disk image using `bootc install to-disk`
+# Arguments:
+#   target_image: Name of image directory (e.g. asteroid-lts)
+#   tag: Image tag (defaults to DEFAULT_TAG in image.env)
+#   backend: OSTree backend ("ostree" or "composefs")
+#   img_size: Size allocated for the raw disk image (default: 40G)
+#   fs_type: Root filesystem type ("btrfs", "ext4", or "xfs")
+#
+# Example: just disk-image asteroid-lts latest ostree 35G btrfs
+[group('Build Virtual Machine Image')]
+disk-image $target_image $tag="" $backend="ostree" $img_size="40G" $fs_type="btrfs":
+    #!/usr/bin/env bash
+    set -euo pipefail
+
+    image_dir="{{ target_image }}"
+    image_dir="${image_dir#localhost/}"
+    source ./images/${image_dir}/image.env
+    tag="{{ tag }}"
+    tag="${tag:-${DEFAULT_TAG}}"
+
+    BYTES_IMAGE_SIZE=$(numfmt --from=iec "{{ img_size }}")
+
+    if [ ! -e "bootable.img" ]; then
+        FREE_SPACE=$(findmnt -bno AVAIL -T ".")
+        if [ "${FREE_SPACE}" -gt "${BYTES_IMAGE_SIZE}" ]; then
+            fallocate -l "${BYTES_IMAGE_SIZE}" "bootable.img"
+        else
+            echo "Not enough disk space available" >&2
+            exit 1
+        fi
+    fi
+
+    BOOTC_INSTALL_ARGS=()
+    BOOTC_INSTALL_ARGS+=("--generic-image" "--via-loopback" "/data/bootable.img" "--wipe")
+    BOOTC_INSTALL_ARGS+=("--filesystem" "{{ fs_type }}")
+    BOOTC_INSTALL_ARGS+=("--source-imgref" "containers-storage:localhost/${image_dir}:${tag}")
+
+    if [[ "{{ backend }}" == "ostree" ]]; then
+        BOOTC_INSTALL_ARGS+=("--bootloader" "grub")
+    else
+        BOOTC_INSTALL_ARGS+=("--bootloader" "grub" "--composefs-backend")
+    fi
+
+    just bootc "{{ target_image }}" "{{ tag }}" install to-disk "${BOOTC_INSTALL_ARGS[@]}"
+
+# Example: just _build-bib localhost/asteroid-lts latest qcow2 disk_config/disk.toml
+# Build a bootable disk/installer image using Titanoboa
+#
+# Parameters:
+#   target_image: Name of image directory (e.g. asteroid-lts)
+#   tag: Image tag (defaults to DEFAULT_TAG in image.env)
+#   type: Output image format (qcow2, raw, iso)
+#   config: Path to partitioning schema or config file (e.g. disk_config/disk.toml)
+_build-titanoboa $target_image $tag $type $config: (_rootful_load_image target_image tag)
+    #!/usr/bin/env bash
+    set -euo pipefail
+
+    image_dir="{{ target_image }}"
+    image_dir="${image_dir#localhost/}"
+    source ./images/${image_dir}/image.env
+    tag="{{ tag }}"
+    tag="${tag:-${DEFAULT_TAG}}"
+
+    BUILDTMP=$(mktemp -p "${PWD}" -d -t _build-titanoboa.XXXXXXXXXX)
+
+    # TITANOBOA_IMAGE can be defined in your image.env (e.g. ghcr.io/ublue-os/titanoboa:latest)
+    TITANOBOA_BIN="${TITANOBOA_IMAGE:-ghcr.io/ublue-os/titanoboa:latest}"
 
     sudo podman run \
       --rm \
       -it \
       --privileged \
-      --pull=newer \
       --net=host \
-      --security-opt label=type:unconfined_t \
+      --security-opt label=disable \
       -v $(pwd)/{{ config }}:/config.toml:ro \
       -v $BUILDTMP:/output \
       -v /var/lib/containers/storage:/var/lib/containers/storage \
-      "${BIB_IMAGE}" \
-      ${args} \
-      "{{ target_image }}:{{ tag }}"
+      "${TITANOBOA_BIN}" \
+      build \
+      --target-type "{{ type }}" \
+      --config /config.toml \
+      "containers-storage:localhost/${image_dir}:${tag}" \
+      /output
 
-    mkdir -p output
-    sudo mv -f $BUILDTMP/* output/
+    mkdir -p output/{{ type }}
+    sudo mv -f $BUILDTMP/* output/{{ type }}/ 2>/dev/null || sudo mv -f $BUILDTMP/* output/
     sudo rmdir $BUILDTMP
     sudo chown -R $USER:$USER output/
 
@@ -365,33 +485,26 @@ _build-bib $target_image $tag $type $config: (_rootful_load_image target_image t
 #   type: The type of image to build (ex. qcow2, raw, iso)
 #   config: The configuration file to use for the build (default: disk_config/disk.toml)
 
-# Example: just _rebuild-bib asteroid-lts latest qcow2 disk_config/disk.toml
-_rebuild-bib $target_image $tag $type $config: (build target_image tag) && (_build-bib target_image tag type config)
+_rebuild-titanoboa $target_image $tag $type $config: (build target_image tag) && (_build-titanoboa target_image tag type config)
 
-# Build a QCOW2 virtual machine image
-# Example: just build-qcow2 asteroid-lts
-[group('Build Virtal Machine Image')]
-build-qcow2 target_image tag="": && (_build-bib ("localhost/" + target_image) tag "qcow2" "disk_config/disk.toml")
+# VM Build Aliases
+[group('Build Virtual Machine Image')]
+build-qcow2 target_image tag="": && (_build-titanoboa (target_image) tag "qcow2" "disk_config/disk.toml")
 
-# Build a RAW virtual machine image
-[group('Build Virtal Machine Image')]
-build-raw target_image tag="": && (_build-bib ("localhost/" + target_image) tag "raw" "disk_config/disk.toml")
+[group('Build Virtual Machine Image')]
+build-raw target_image tag="": && (_build-titanoboa (target_image) tag "raw" "disk_config/disk.toml")
 
-# Build an ISO virtual machine image
-[group('Build Virtal Machine Image')]
-build-iso target_image tag="": && (_build-bib ("localhost/" + target_image) tag "iso" "disk_config/iso.toml")
+[group('Build Virtual Machine Image')]
+build-iso target_image tag="": && (_build-titanoboa (target_image) tag "iso" "disk_config/iso.toml")
 
-# Rebuild a QCOW2 virtual machine image
-[group('Build Virtal Machine Image')]
-rebuild-qcow2 target_image tag="": && (_rebuild-bib ("localhost/" + target_image) tag "qcow2" "disk_config/disk.toml")
+[group('Build Virtual Machine Image')]
+rebuild-qcow2 target_image tag="": && (_rebuild-titanoboa (target_image) tag "qcow2" "disk_config/disk.toml")
 
-# Rebuild a RAW virtual machine image
-[group('Build Virtal Machine Image')]
-rebuild-raw target_image tag="": && (_rebuild-bib ("localhost/" + target_image) tag "raw" "disk_config/disk.toml")
+[group('Build Virtual Machine Image')]
+rebuild-raw target_image tag="": && (_rebuild-titanoboa (target_image) tag "raw" "disk_config/disk.toml")
 
-# Rebuild an ISO virtual machine image
-[group('Build Virtal Machine Image')]
-rebuild-iso target_image tag="": && (_rebuild-bib ("localhost/" + target_image) tag "iso" "disk_config/iso.toml")
+[group('Build Virtual Machine Image')]
+rebuild-iso target_image tag="": && (_rebuild-titanoboa (target_image) tag "iso" "disk_config/iso.toml")
 
 # Run a virtual machine with the specified image type and configuration
 _run-vm $target_image $tag $type $config:
@@ -443,15 +556,15 @@ _run-vm $target_image $tag $type $config:
 
 # Run a virtual machine from a QCOW2 image
 [group('Run Virtal Machine')]
-run-vm-qcow2 target_image tag="": && (_run-vm ("localhost/" + target_image) tag "qcow2" "disk_config/disk.toml")
+run-vm-qcow2 target_image tag="": && (_run-vm (target_image) tag "qcow2" "disk_config/disk.toml")
 
 # Run a virtual machine from a RAW image
 [group('Run Virtal Machine')]
-run-vm-raw target_image tag="": && (_run-vm ("localhost/" + target_image) tag "raw" "disk_config/disk.toml")
+run-vm-raw target_image tag="": && (_run-vm (target_image) tag "raw" "disk_config/disk.toml")
 
 # Run a virtual machine from an ISO
 [group('Run Virtal Machine')]
-run-vm-iso target_image tag="": && (_run-vm ("localhost/" + target_image) tag "iso" "disk_config/iso.toml")
+run-vm-iso target_image tag="": && (_run-vm (target_image) tag "iso" "disk_config/iso.toml")
 
 # Run a virtual machine using systemd-vmspawn
 [group('Run Virtal Machine')]

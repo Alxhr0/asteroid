@@ -5,7 +5,7 @@ set -ouex pipefail
 
 # Install Nix in daemon mode if not already present
 if ! command -v nix > /dev/null 2>&1; then
-    curl -fsSL https://install.determinate.systems/nix | sh -s -- install ostree --no-confirm
+    curl -fsSL https://install.determinate.systems/nix | sh -s -- install linux --no-confirm
 fi
 
 # Enable experimental features (idempotent)
@@ -41,7 +41,7 @@ done < /etc/passwd
 mkdir -pv /etc/environment.d
 
 # Make Nix available in all contexts (login shells, systemd services, etc.)
-echo 'PATH="${PATH}:/nix/var/nix/profiles/default/bin:/nix/var/nix/profiles/default/sbin"' > /etc/environment.d/50-nix.conf
+echo 'PATH="/usr/bin:/usr/sbin:/bin:/nix/var/nix/profiles/default/bin:/nix/var/nix/profiles/default/sbin"' > /etc/environment.d/50-nix.conf
 
 # Provide shell integration for login shells
 echo '. /nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh' > /etc/profile.d/nix.sh

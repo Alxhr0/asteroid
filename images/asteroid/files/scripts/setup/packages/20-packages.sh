@@ -8,10 +8,11 @@ pacman --noconfirm -S nushell eza bat zoxide btop htop distrobox podman fastfetc
 # Fonts
 pacman --noconfirm -S noto-fonts noto-fonts-cjk noto-fonts-emoji ttf-iosevka-nerd ttf-iosevkaterm-nerd ttf-jetbrains-mono ttf-jetbrains-mono-nerd
 
+rm /opt
+
 # Apps
 pacman --noconfirm -S virt-manager qemu-desktop flatpak steam partitionmanager firefox vesktop solaar
 
-rm /opt
 mkdir /opt
 
 # AUR packages
@@ -28,7 +29,4 @@ wget https://mega.nz/linux/repo/Arch_Extra/x86_64/dolphin-megasync-x86_64.pkg.ta
 pacman -Sy
 
 # Misc
-pacman --noconfirm -S deepinv20-white-cursors papirus-icon-theme man-pages networkmanager 
-
-
-
+pacman --noconfirm -S deepinv20-white-cursors papirus-icon-theme man-pages networkmanager
