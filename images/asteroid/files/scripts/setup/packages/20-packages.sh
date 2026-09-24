@@ -8,7 +8,7 @@ pacman --noconfirm -S nushell eza bat zoxide btop htop distrobox podman fastfetc
 # Fonts
 pacman --noconfirm -S noto-fonts noto-fonts-cjk noto-fonts-emoji ttf-iosevka-nerd ttf-iosevkaterm-nerd ttf-jetbrains-mono ttf-jetbrains-mono-nerd
 
-rm /opt
+rm -rf /opt
 
 # Apps
 pacman --noconfirm -S virt-manager qemu-desktop flatpak steam partitionmanager firefox vesktop solaar
