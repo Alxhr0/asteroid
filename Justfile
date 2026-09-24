@@ -438,10 +438,10 @@ disk-image $target_image $tag="" $backend="ostree" $img_size="40G" $fs_type="btr
 # Build a bootable disk/installer image using Titanoboa
 #
 # Parameters:
-#   target_image: Name of image directory (e.g. asteroid-lts)
-#   tag: Image tag (defaults to DEFAULT_TAG in image.env)
-#   type: Output image format (qcow2, raw, iso)
-#   config: Path to partitioning schema or config file (e.g. disk_config/disk.toml)
+# target_image: Name of image directory (e.g. asteroid-lts)
+# tag: Image tag (defaults to DEFAULT_TAG in image.env)
+# type: Output image format (qcow2, raw, iso)
+# config: Path to partitioning schema or config file (e.g. disk_config/disk.toml)
 _build-titanoboa $target_image $tag $type $config: (_rootful_load_image target_image tag)
     #!/usr/bin/env bash
     set -euo pipefail
