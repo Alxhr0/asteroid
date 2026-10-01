@@ -1,0 +1,53 @@
+add_newline = false
+format = "$username(white)[󰘧 ](fg:bold white)$hostname $directory$cpp$python$rust$golang$nodejs$nix_shell$git_branch$git_state$git_status $cmd_duration$line_break$character"
+
+[directory]
+style = "fg:blue"
+#format = "[\\[ $path \\]]($style)"
+format = '[\[ ](fg:blue)[$path](fg:bold white)[ \]](fg:blue) '
+read_only = "  "
+
+[git_branch]
+style = "bold yellow"
+
+[character]
+success_symbol = "[󰘧](bold white)"
+error_symbol = "[󰘧](bold red)"
+
+[username]
+show_always = true
+style_user = "bold blue"
+format = '[$user]($style) '
+
+[hostname]
+ssh_only = false
+format = '[$hostname]($style)'
+style = "bold white"
+
+[cmd_duration]
+format = "[$duration]($style)"
+style = "yellow"
+
+[nix_shell]
+symbol = ""
+format = " [$symbol $state( \\($name\\))](bold blue) "
+
+#[cpp]
+#symbol = ""
+#format = '[$symbol $name $version](bold blue)'
+
+[golang]
+symbol = ""
+format = "[ $symbol ($version) ](bold blue)"
+
+[python]
+symbol = ""
+format = "[ $symbol ($version) ](bold green)"
+
+[nodejs]
+symbol = "󰎙"
+format = "[ $symbol ($version) ](bold yellow)"
+
+[rust]
+symbol = ""
+format = "[ $symbol ($version) ](bold red)"
