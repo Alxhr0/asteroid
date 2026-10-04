@@ -2,9 +2,9 @@
 
 set -ouex pipefail
 
-dnf -y in klassy merkuro kdepim-addons kf6-servicemenus-imagetools
+dnf -y in klassy merkuro kdepim-addons kdepimlibs kdepim-runtime kf6-servicemenus-imagetools
 
-dnf -y remove filelight krfb kcharselect kfind
+dnf -y remove filelight krfb kcharselect kfind krdc
 
 
 dnf -y install mariadb

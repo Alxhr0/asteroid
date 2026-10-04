@@ -3,6 +3,9 @@
 set -ouex pipefail
 
 # CLI tools
+rpm -e --nodeps coreutils-common
+dnf -y swap --allowerasing coreutils uutils-coreutils
+
 rm -r /root
 dnf -y in nushell eza bat zoxide htop dnsmasq hourglass neovim man-db
 rm -r /root
@@ -28,4 +31,4 @@ wget https://mega.nz/linux/repo/Fedora_44/x86_64/megasync-Fedora_44.x86_64.rpm &
 wget https://mega.nz/linux/repo/Fedora_44/x86_64/dolphin-megasync-Fedora_44.x86_64.rpm && dnf -y --setopt=tsflags=noscripts install "$PWD/dolphin-megasync-Fedora_44.x86_64.rpm"
 
 # Misc
-dnf -y install papirus-icon-theme man-pages deepinv20-white-cursors
+dnf -y install papirus-icon-theme man-pages deepinv20-white-cursors kmscon
