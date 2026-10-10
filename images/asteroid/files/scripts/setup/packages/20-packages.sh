@@ -16,10 +16,7 @@ pacman --noconfirm -S virt-manager qemu-desktop flatpak steam partitionmanager f
 mkdir -p /opt
 
 # AUR packages
-su builder -c "yay --noconfirm -S visual-studio-code-bin vmware-workstation"
-
-# su builder -c "cd /build && git clone https://aur.archlinux.org/vmware-workstation.git && cd vmware-workstation && makepkg --noconfirm -si"
-# rm -r /build/vmware-workstation
+su builder -c "yay --noconfirm -S visual-studio-code-bin"
 
 ## Megasync
 cd /tmp
