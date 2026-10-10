@@ -13,7 +13,7 @@ rm -rf /opt
 # Apps
 pacman --noconfirm -S virt-manager qemu-desktop flatpak steam partitionmanager firefox vesktop solaar
 
-mkdir /opt
+mkdir -p /opt
 
 # AUR packages
 su builder -c "yay --noconfirm -S visual-studio-code-bin vmware-workstation"
