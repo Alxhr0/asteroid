@@ -3,6 +3,7 @@
 set -ouex pipefail
 
 # CLI tools
+pacman --noconfirm -S --ask 4 home_Alxhr0_Arch/uutils-coreutils
 pacman --noconfirm -S nushell eza bat zoxide btop htop distrobox podman fastfetch inetutils dnsmasq hourglass neovim man-db
 
 # Fonts
@@ -11,12 +12,12 @@ pacman --noconfirm -S noto-fonts noto-fonts-cjk noto-fonts-emoji ttf-iosevka-ner
 rm -rf /opt
 
 # Apps
-pacman --noconfirm -S virt-manager qemu-desktop flatpak steam partitionmanager firefox vesktop solaar
+pacman --noconfirm -S virt-manager qemu-desktop flatpak steam partitionmanager vesktop solaar
 
 mkdir -p /opt
 
 # AUR packages
-su builder -c "yay --noconfirm -S visual-studio-code-bin"
+su builder -c "yay --noconfirm -S visual-studio-code-bin floorp-bin"
 
 ## Megasync
 cd /tmp
