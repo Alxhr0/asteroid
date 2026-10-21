@@ -4,4 +4,4 @@
 
 export LD_LIBRARY_PATH="/usr/share/factory/opt/megasync/lib"
 
-exec /usr/share/factory/opt/megasync/megasync $@
+exec /usr/share/factory/opt/megasync/megasync "$@"

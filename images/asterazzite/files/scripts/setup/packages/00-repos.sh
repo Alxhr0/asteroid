@@ -1,9 +1,9 @@
 #!/bin/bash
 set -ouex pipefail
 
-dnf -y config-manager addrepo --from-repofile=https://download.opensuse.org/repositories/home:paulmcauley/Fedora_$(rpm -E %fedora)/home:paulmcauley.repo
+dnf -y config-manager addrepo --from-repofile=https://download.opensuse.org/repositories/home:paulmcauley/Fedora_"$(rpm -E %fedora)"/home:paulmcauley.repo
 
-dnf -y config-manager addrepo --from-repofile=https://download.opensuse.org/repositories/home:Alxhr0/Fedora_$(rpm -E %fedora)/home:Alxhr0.repo
+dnf -y config-manager addrepo --from-repofile=https://download.opensuse.org/repositories/home:Alxhr0/Fedora_"$(rpm -E %fedora)"/home:Alxhr0.repo
 
 echo "[gemfury-nushell]
 name=Gemfury Nushell Repo
