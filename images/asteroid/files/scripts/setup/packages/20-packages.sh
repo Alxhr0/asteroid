@@ -12,12 +12,12 @@ pacman --noconfirm -S noto-fonts noto-fonts-cjk noto-fonts-emoji ttf-iosevka-ner
 rm -rf /opt
 
 # Apps
-pacman --noconfirm -S virt-manager qemu-desktop flatpak steam partitionmanager vesktop solaar
+pacman --noconfirm -S virt-manager qemu-desktop flatpak steam partitionmanager solaar
 
 mkdir -p /opt
 
 # AUR packages
-su builder -c "yay --noconfirm -S visual-studio-code-bin floorp-bin"
+su builder -c "yay --noconfirm -S visual-studio-code-bin floorp-bin vesktop-bin"
 
 ## Megasync
 cd /tmp
